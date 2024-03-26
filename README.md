@@ -76,6 +76,36 @@ UniFi Client Manager is a Python project that provides a set of scripts to autom
 
     The script will read the MAC addresses from the CSV file and send requests to the UniFi Controller API to forget the corresponding devices.
 
+### Retrieving Active Clients
+
+1. Run the `get_active_clients.py` script:
+
+    ```bash
+    python get_active_clients.py
+    ```
+
+    The script will retrieve the active clients from the UniFi Controller API and save the information to a CSV file (`active_clients.csv`) in the `data` directory. You can modify the script to reduce or customize what fields are saved to the CSV file.
+
+### Retrieving Historic Clients
+
+1. Run the `get_historic_clients.py` script:
+
+    ```bash
+    python get_historic_clients.py
+    ```
+
+    The script will retrieve the historic or currently disconnected clients from the UniFi Controller API and save the information to a CSV file (`historic_clients.csv`) in the `data` directory. You can modify the script to reduce or customize what fields are saved to the CSV file.
+
+### Retrieving UniFi Devices
+
+1. Run the `get_unifi_clients.py` script:
+
+    ```bash
+    python get_unifi_clients.py
+    ```
+
+    The script will retrieve the list of UniFi devices from the UniFi Controller API and save the information to a CSV file (`unifi_devices.csv`) in the `data` directory. You can modify the script to reduce or customize what fields are saved to the CSV file.
+
 ### Testing API Connectivity
 
 1. Run the `test_api.py` script:
@@ -95,11 +125,17 @@ unifi-client-manager/
 ├── README.md
 ├── requirements.txt
 ├── forget_devices_unifi.py
+├── get_active_clients.py
+├── get_historic_clients.py
+├── get_unifi_clients.py
 ├── test_api.py
 ├── update_clients.py
 └── data/
+    ├── active_clients.csv
     ├── client_list.csv
-    └── forget_devices.csv
+    ├── forget_devices.csv
+    ├── historic_clients.csv
+    └── unifi_devices.csv
 ```
 
 - `.env`: Contains sensitive information like the UDM SE URL, site name, CSRF token, and session cookie.
@@ -107,6 +143,8 @@ unifi-client-manager/
 - `README.md`: Provides information and instructions for the project.
 - `requirements.txt`: Lists the required Python packages.
 - `forget_devices_unifi.py`: Script to forget devices based on MAC addresses provided in a CSV file.
+- `get_active_clients.py`: Script to retrieve the active clients from the UniFi Controller API.
+- `get_historic_clients.py`: Script to retrieve the historic or currently disconnected clients from the UniFi Controller API.
 - `test_api.py`: Script to test the connectivity and functionality of the UniFi Controller API endpoints.
 - `update_clients.py`: Script to update client information using the UniFi Controller API.
 - `data/`: Directory to store the CSV files containing client information and MAC addresses.
