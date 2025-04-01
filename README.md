@@ -24,14 +24,21 @@ UniFi Client Manager is a Python project that provides a set of scripts to autom
     ```bash
     cd unifi-client-manager
     ```
+3. Initialize a Python Virtual Environment (Optional):
+    ```bash
+    python -m venv .
+    source ./bin/activate
+    ```
 
-3. Install the required Python packages:
+    Follow your python distribution or OS-recommended method for installing the `venv` module if not already available, or skip this step.
+
+4. Install the required Python packages:
 
     ```bash
     pip install -r requirements.txt
     ```
 
-4. Create a `.env` file in the project directory and provide the following information:
+5. Create a `.env` file in the project directory and provide the following information:
 
     ```env
     UDM_URL=https://your-udm-se-url
@@ -40,7 +47,15 @@ UniFi Client Manager is a Python project that provides a set of scripts to autom
     SESSION_COOKIE=your-session-cookie
     ```
 
-    Replace `your-udm-se-url`, `your-site-name`, `your-csrf-token`, and `your-session-cookie` with the actual values obtained from your UDM SE setup. The cookie and csrf are both easily captured by logging into your UDM and copying the cookie and csrf token from the browser. This will only work for the session time of the cookie.
+    Replace `your-udm-se-url`, `your-site-name`, `your-csrf-token`, and `your-session-cookie` with the actual values obtained from your UDM SE setup (see below for an example). The cookie and csrf are both easily captured by logging into your UDM and copying the cookie and csrf token from the browser. This will only work for the session time of the cookie.
+
+### Obtaining Cookie/Tokens for `.env` (Google Chrome)
+1. Login to the local interface for your UDM/UniFi Network console (not Cloud/Remote Access). 
+2. Right Click -> Inspect. 
+3. Choose the `Network` tab, refresh the page, then pick a resource that has both of the required values below (`device`, `info`, and a few others work).
+4. Within `Headers` sub-tab, copy the string listed within the `Cookie:` header that begins with `TOKEN=` (include this prefix) until the location it ends in a semicolon `;` (not including the semicolon). Paste this value as your `SESSION_COOKIE` in the `.env` file.
+5. At the bottom of `Headers`, copy the entire string listed within `X-Csrf-Token:` and paste this value as your `CSRF_TOKEN` value in the `.env` file.
+6. `UDM_SITE` refers to the site name within the UniFi Network application running on your console, not the console name. The site name is in the local URL, for example `https://<host_or_ip>/network/<site>/dashboard`. For most installations without a multi-site setup within the Network application this will likely be `default`.
 
 ## Usage
 
@@ -50,6 +65,8 @@ UniFi Client Manager is a Python project that provides a set of scripts to autom
     - `mac_address`: The MAC address of the client device.
     - `name`: The desired name for the client device.
     - `fixed_ip` (optional): The fixed IP address to assign to the client device.
+    - `local_dns` (optional): The local DNS record to assign to the client device.
+    - `note` (optional): The note to assign to the client device.
 
     Place the CSV file in the `data` directory.
 

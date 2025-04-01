@@ -45,6 +45,8 @@ with open(csv_file_path, "r") as csv_file:
         mac_address = row["mac_address"]
         name = row["name"]
         fixed_ip = row.get("fixed_ip")  # Optional fixed IP address
+        local_dns = row.get("local_dns") # Optional local DNS record
+        note = row.get("note") # Optional Note
 
         # Check if client exists
         client = next((c for c in existing_clients if c["mac"] == mac_address), None)
@@ -55,7 +57,11 @@ with open(csv_file_path, "r") as csv_file:
             update_data = {
                 "name": name,
                 "use_fixedip": bool(fixed_ip),
-                "fixed_ip": fixed_ip if fixed_ip else ""
+                "fixed_ip": fixed_ip if fixed_ip else "",
+                "local_dns_record_enabled": bool(local_dns),
+                "local_dns_record": local_dns if local_dns else "",
+                "noted": bool(note),
+                "note": note if note else ""
             }
             response = session.put(update_url, json=update_data, verify=False)
             response.raise_for_status()
@@ -67,7 +73,10 @@ with open(csv_file_path, "r") as csv_file:
                 "name": name,
                 "use_fixedip": bool(fixed_ip),
                 "fixed_ip": fixed_ip if fixed_ip else "",
-                "local_dns_record_enabled": False
+                "local_dns_record_enabled": bool(local_dns),
+                "local_dns_record": local_dns if local_dns else "",
+                "noted": bool(note),
+                "note": note if note else ""
             }
             response = session.post(create_url, json=create_data, verify=False)
             response.raise_for_status()
